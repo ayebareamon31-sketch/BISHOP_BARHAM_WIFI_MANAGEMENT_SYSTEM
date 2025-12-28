@@ -1,12 +1,19 @@
 <?php
-$conn = new mysqli(
-    getenv("DB_HOST"),
-    getenv("DB_USER"),
-    getenv("DB_PASS"),
-    getenv("DB_NAME")
-);
+$DB_HOST = getenv("DB_HOST");
+$DB_USER = getenv("DB_USER");
+$DB_PASS = getenv("DB_PASS");
+$DB_NAME = getenv("DB_NAME");
+
+/* DEBUG SAFETY CHECK */
+if (!$DB_HOST || !$DB_USER || !$DB_NAME) {
+    die("Database environment variables not set.");
+}
+
+$conn = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
 
 if ($conn->connect_error) {
-    die("Database connection failed");
+    die("Database connection failed: " . $conn->connect_error);
 }
 ?>
+
+
